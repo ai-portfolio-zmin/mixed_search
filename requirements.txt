@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+
+sentence-transformers
+torch
+transformers
+
+numpy
+pandas
+scikit-learn
+
+pyserini
+faiss-cpu
+
+pydantic
+python-dotenv
+PyYAML
