@@ -1,6 +1,10 @@
+import os
 from pathlib import Path
 from pydantic import BaseModel
-FILE_DIR = Path(__file__).parent.parent.as_posix()
+
+ARTIFACT_BASE = os.getenv('ARTIFACT_BASE')
+if ARTIFACT_BASE is None:
+    ARTIFACT_BASE = Path(__file__).parent.parent.as_posix() + '/data'
 
 
 class Config(BaseModel):
@@ -17,7 +21,7 @@ class Config(BaseModel):
     bm25_b:float = 0.4
 
 def get_config(corpus, **kwargs):
-    base = FILE_DIR + f'/data/{corpus}'
+    base = ARTIFACT_BASE + f'/{corpus}'
     return Config(**{'data_folder' : base,
             'bm25_index_folder': base + r'/bm25_index',
             'input_data': base + r'/clean_data.csv',

@@ -1,6 +1,5 @@
 import subprocess
 from sentence_transformers import SentenceTransformer
-import pandas as pd
 import numpy as np
 import faiss
 from pathlib import Path

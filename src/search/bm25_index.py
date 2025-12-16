@@ -1,8 +1,10 @@
 from src.config import CONFIGS
 import os
+import platform
 
-os.environ["JAVA_HOME"] = r"C:\Program Files\Eclipse Adoptium\jdk-25.0.1.8-hotspot"
-os.environ["PATH"] += ";" + os.environ["JAVA_HOME"] + r"\bin"
+if platform.system() == "Windows":
+    os.environ["JAVA_HOME"] = r"C:\Program Files\Eclipse Adoptium\jdk-25.0.1.8-hotspot"
+    os.environ["PATH"] += ";" + os.environ["JAVA_HOME"] + r"\bin"
 from pyserini.search.lucene import LuceneSearcher
 import argparse
 import json
