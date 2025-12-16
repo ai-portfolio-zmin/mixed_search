@@ -42,3 +42,11 @@ def read_jsonl(file):
         for line in f:
             result.append(json.loads(line))
     return result
+
+def get_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+
+    handler = logging.StreamHandler()
+    logger.addHandler(handler)
+    return logger

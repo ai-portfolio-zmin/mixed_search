@@ -3,8 +3,14 @@ from pathlib import Path
 from pydantic import BaseModel
 
 ARTIFACT_BASE = os.getenv('ARTIFACT_BASE')
+BUCKET = os.getenv('S3_BUCKET')
+PREFIX = os.getenv('S3_PREFIX')
 if ARTIFACT_BASE is None:
     ARTIFACT_BASE = Path(__file__).parent.parent.as_posix() + '/data'
+if BUCKET is None:
+    BUCKET = 'mixed-search-data-zmin'
+if PREFIX is None:
+    PREFIX = 'data/'
 
 
 class Config(BaseModel):

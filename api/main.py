@@ -1,12 +1,13 @@
 from fastapi import  FastAPI
 from pydantic import BaseModel
-from src.config import CONFIGS
 from src.search.embed_index import EmbeddingIndex
 from src.search.bm25_index import BM25Index
 from src.search.hybrid_index import HybridIndex
 from src.search.reranker import ReRanker
 import logging
 from functools import lru_cache
+from src.cloud import ensure_data
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -25,6 +26,12 @@ class IRInput(BaseModel):
 
 app = FastAPI(title = 'Information retrieval',
               version = '1.0.0')
+
+
+@app.on_event('startup')
+def startup_event():
+    ensure_data()
+
 
 @app.get('/')
 def root():
@@ -53,12 +60,14 @@ def retrieve(payload:IRInput):
     return result
 
 if __name__ == '__main__':
-    input = {
-        'corpus':'amzn',
-        "query": "wireless headphone",
-        "top_k": 5,
-        "model": "embedding",
-        "rerank": False,
-        "alpha": 0.5
-    }
-    retrieve(input)
+    ensure_data()
+    # input = {
+    #     'corpus':'amzn',
+    #     "query": "wireless headphone",
+    #     "top_k": 5,
+    #     "model": "embedding",
+    #     "rerank": False,
+    #     "alpha": 0.5
+    # }
+    # retrieve(input)
+

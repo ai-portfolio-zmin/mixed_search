@@ -10,3 +10,4 @@ pyserini
 faiss-cpu
 
 pydantic
+boto3
