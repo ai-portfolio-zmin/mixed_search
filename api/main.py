@@ -66,15 +66,3 @@ def retrieve(payload: IRInput):
     if data['rerank']:
         result = reranker.rerank(data['query'], result)
     return result
-
-
-if __name__ == '__main__':
-    input = {
-        'corpus': 'amzn',
-        "query": "wireless headphone",
-        "top_k": 5,
-        "model": "embedding",
-        "rerank": False,
-        "alpha": 0.5
-    }
-    retrieve(input)
