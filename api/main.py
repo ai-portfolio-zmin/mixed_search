@@ -32,6 +32,7 @@ app = FastAPI(title='Information retrieval',
 
 @app.get('/')
 def root():
+    logger.info('/ called')
     return {'status': 'ok'}
 
 
@@ -40,6 +41,7 @@ data_ensured = False
 
 @app.post('/retrieve')
 def retrieve(payload: IRInput):
+    logger.info('retrieve called')
     global data_ensured
     if not data_ensured:
         ensure_data()
