@@ -34,6 +34,10 @@ app = FastAPI(title='Information retrieval',
 def health():
     return {'status': 'ok'}
 
+@app.get('/')
+def temp():
+    return {'status': 'ok'}
+
 
 @app.on_event('startup')
 def startup_event():
@@ -42,13 +46,14 @@ def startup_event():
 
 @app.post('/retrieve')
 def retrieve(payload: IRInput):
+
     data = payload.dict()
     embedding_index, bm25_index, hybrid_index, reranker = get_index(data['corpus'])
 
     if len(data['query']) == 0:
         return {"error": "The query can't be empty"}
-    logger.info({'event': 'request',
-                 'payload': payload.model_dump()})
+    logger.info({'event':'request',
+                 'payload':payload.model_dump()})
     if data['model'].lower() == 'bm25':
         result = bm25_index.search(data['query'], data['top_k'])
     elif data['model'].lower() == 'embedding':
@@ -62,6 +67,6 @@ def retrieve(payload: IRInput):
 
     if data['rerank']:
         result = reranker.rerank(data['query'], result)
-    logger.info({'event': 'requested_completed',
-                 'status': 'success'})
+    logger.info({'event':'requested_completed',
+                 'status':'success'})
     return result
